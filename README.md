@@ -11,7 +11,7 @@
    - Para utilizar pode-se anexar o arquivo da pasta AcessoDados/Banco ou criar o banco Pessoas e executar os scripts da pasta scripts
    - String de conexão deve ser alterada com os dados do servidor de banco de dados em PessoasFone.WebApi\appsettings.json
  - Açoes futuras a executar
-   - Remover a referência do projeto com Contexto do projeto WebApi
+   - Remover a referência do Contexto do projeto WebApi
    - Corrigir o problema com o componente Mapper 
 ## FrontEnd
  - Utilizado o Material Designer
