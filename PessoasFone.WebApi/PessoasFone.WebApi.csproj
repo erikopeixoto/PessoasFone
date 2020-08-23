@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Aliquota.WebApi.Program</StartupObject>
+    <AssemblyName>PessoasFone.WebApi</AssemblyName>
+    <RootNamespace>PessoasFone.WebApi</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Banco\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PessoasFone.Modelos\PessoasFone.Modelos.csproj" />
+    <ProjectReference Include="..\PessoasFone.Servicos\PessoasFone.Servicos.csproj" />
+  </ItemGroup>
+
+
+</Project>

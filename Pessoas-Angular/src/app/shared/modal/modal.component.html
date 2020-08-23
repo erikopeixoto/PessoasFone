@@ -1,0 +1,10 @@
+<div class="modal-class" *ngIf="getVisible()==true" id="modal-component" #modal>
+    <div class="content-class" [style.width]="width" >
+        <div class="header-class">{{title}}
+          <div _ngcontent-c2 (click)="closeModal()" class="fa fa-times close-button"></div>
+        </div>
+        <div class="body-class" [style.height]="height">
+          <ng-content></ng-content>
+        </div>
+    </div>
+</div>

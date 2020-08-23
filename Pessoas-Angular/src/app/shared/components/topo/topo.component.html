@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" *ngIf="showMenu()">
+  <div class="container">
+    <a class="navbar-brand" routerLink="dashboard">Pessoas Telefones</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div *ngIf="loggedIn()" class="collapse navbar-collapse" id="nvInicial">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="pessoasFone">Telefones</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

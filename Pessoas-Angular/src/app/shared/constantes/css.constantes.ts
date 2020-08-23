@@ -1,0 +1,11 @@
+export const BTN_PRIMARY = 'btn-primary';
+export const BTN_SECONDARY = 'btn-secondary';
+export const CHECKBOX_INLINE = 'checkbox-inline';
+export const SIDE_BREAK = 'side-break';
+export const SIDE = 'side';
+export const FA_FA_USER_PLUS = 'fa fa-user-plus';
+export const FA_FA_EDIT = 'fa fa-edit';
+export const FA_FA_FILE_TEXT_O = 'fa fa-file-text-o';
+export const FA_FA_USER_O = 'fa fa-user-o';
+export const FA_FA_FOLDER_OPEN = 'fa fa-folder-open';
+export const FA_FA_SHIELD = 'fa fa-shield';

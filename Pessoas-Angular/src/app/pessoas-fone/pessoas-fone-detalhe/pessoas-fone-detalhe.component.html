@@ -1,0 +1,35 @@
+<form autocomplete="off" novalidate [formGroup]="formPessoasFones">
+  <div class="form-group">
+    <div class="form-inline mr-auto" style="width: 60%;">
+      <div class="form-group mb-6">
+        <app-input-text titulo="Nome *"
+                        controlName="Nome"
+                        [formGroup]="formPessoasFones"
+                        maxLength="30"
+                        style="width: 500px">
+        </app-input-text>
+      </div>
+    </div>
+    <div>
+      <app-input-text titulo="Telefone *"
+                      controlName="FoneFormatado"
+                      maxLength="9"
+                      maskTexto="\d{5}-\d{4}"
+                      [formGroup]="formPessoasFones"
+                      style="width: 250px">
+      </app-input-text>
+    </div>
+    <div>
+      <app-input-select titulo="Tipo *"
+                      [opcoes]="tipos"
+                      controlName="FoneTipoId"
+                      [formGroup]="formPessoasFones"
+                      style="width: 300px">
+      </app-input-select>
+    </div>
+  </div>
+  <mat-card-actions>
+    <button type="button" [disabled]="this.formPessoasFones.invalid" color="accent" mat-raised-button (click)="enviar()">Salvar</button>
+    <button type="button" color="warn" mat-raised-button (click)="fechar()">Cancelar</button>
+  </mat-card-actions>
+</form>

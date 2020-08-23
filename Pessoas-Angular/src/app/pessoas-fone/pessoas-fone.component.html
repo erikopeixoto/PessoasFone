@@ -1,0 +1,66 @@
+<div class="container" id="grPessoasFones">
+  <h2>PessoasFones</h2>
+  <form autocomplete="off" novalidate [formGroup]="filtroListagem">
+    <div class="d-flex">
+      <div class="form-inline mr-auto" style="width: 60%;">
+        <div class="form-group mb-6">
+          <app-input-text titulo="Nome"
+                          controlName="nome"
+                          [formGroup]="filtroListagem"
+                          style="width: 600px">
+          </app-input-text>
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-outline-primary" (click)="incluirPessoasFone()">
+          <i class="fa fa-plus-circle"></i>&nbsp;
+          Novo Fone
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-striped">
+    <thead class="thead-light">
+      <tr>
+        <th>#</th>
+        <th>Nome</th>
+        <th>Fone</th>
+        <th>Tipo</th>
+        <th colspan="2">Ações</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="pessoasFonesFiltrados && pessoasFonesFiltrados.length">
+      <tr *ngFor="let PessoasFone of pessoasFonesFiltrados">
+        <td>{{PessoasFone.Id}}</td>
+        <td>{{PessoasFone.Nome}}</td>
+        <td>{{PessoasFone.FoneFormatado}}</td>
+        <td>{{PessoasFone.Descricao}}</td>
+        <td>
+          <div class="btn-group">
+            <button class="btn btn-sm btn-success" title="Editar" (click)="editarPessoasFone(PessoasFone)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" title="Excluir" (click)="excluirPessoasFone(PessoasFone)">
+              <i class="fa fa-eraser"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!stsPessoasFones">
+      <tr>
+        <td colspan="7" class="text-center">
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<app-modal [title]="''" [width]="'600px'" #modalDetalhePessoasFone>
+  <ng-container *ngIf="getVisiblePessoasFoneDetalhe == true">
+    <app-pessoas-fone-detalhe (itemDestino)="receberPessoasFone($event)"
+     [item]="this.PessoasFone" [modalParent]="this.parente"></app-pessoas-fone-detalhe>
+   </ng-container>
+</app-modal>
+

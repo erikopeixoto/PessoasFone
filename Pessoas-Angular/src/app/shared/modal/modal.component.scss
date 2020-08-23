@@ -1,0 +1,49 @@
+// Fundo da tela da modal
+.modal-class {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    height: 100%; width: 100%;
+    z-index: 100;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+}
+
+.content-class {
+  margin: auto;
+  border-radius: 5px;
+  padding: 5px;
+  height: max-content;
+  max-height: fit-content;
+  width: max-content;
+  background-color: white;
+  box-shadow: 1px 1px 5px 1px black;
+}
+
+.header-class {
+  border-bottom: 1px solid rgba(0,0,0,0.1); font-size: 20px; font-weight: 600;
+  text-align: left; padding: 15px;
+  font-weight: bold;
+}
+
+.body-class {
+  background-color: #ffffff;
+  overflow: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 70px);
+}
+
+.close-button{
+    float: right;
+    padding: 3px 5px;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.15);
+}
+
+.close-button:hover{
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
+
