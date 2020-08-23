@@ -27,9 +27,9 @@ namespace PessoasFone.Servicos.Servicos
         {
             return await repositorio.Alterar(foneTipo.Id, foneTipo);
         }
-        public async Task<FoneTipo> Excluir(FoneTipo pessoasFones)
+        public async Task<FoneTipo> Excluir(int id)
         {
-            return await repositorio.Excluir(pessoasFones.Id);
+            return await repositorio.Excluir(id);
         }
         public async Task<List<FoneTipo>> Listar()
         {            

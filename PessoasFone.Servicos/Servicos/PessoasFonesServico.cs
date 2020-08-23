@@ -33,22 +33,27 @@ namespace PessoasFone.Servicos.Servicos
         {
             return map.Map<PessoasFonesDto>(await repositorio.Alterar(pessoasFones.Id, pessoasFones));
         }
-        public async Task<PessoasFonesDto> Excluir(PessoasFones pessoasFones)
+        public async Task<PessoasFonesDto> Excluir(int id)
         {
-            return map.Map<PessoasFonesDto>(await repositorio.Excluir(pessoasFones.Id));
+            return map.Map<PessoasFonesDto>(await repositorio.Excluir(id));
         }
         public async Task<List<PessoasFonesDto>> Listar()
         {
             List<PessoasFones> pessoas = await repositorio.Listar();
-            return map.Map<List<PessoasFonesDto>>(pessoas);
+            List<PessoasFonesDto> pessoasDto = map.Map<List<PessoasFonesDto>>(pessoas);
+            pessoasDto.ForEach(item =>
+            {
+                item.FormatarFone();
+            });
+            return pessoasDto;
         }
         public async Task<PessoasFonesDto> BuscarId(int id)
         {
             PessoasFonesDto pessoa = map.Map<PessoasFonesDto>(await repositorio.BuscarId(id));
-            //if (pessoa != null)
-            //{
-            //    pessoa.FormatarFone();
-            //}
+            if (pessoa != null && pessoa.FoneNumero > 0)
+            {
+                pessoa.FormatarFone();
+            }
             return pessoa;
         }
         public bool Existe(int id)

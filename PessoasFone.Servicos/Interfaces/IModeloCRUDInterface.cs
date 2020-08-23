@@ -10,7 +10,7 @@ namespace PessoasFone.Servicos.Interfaces
         Task<K> Incluir(T obj);
         Task<List<K>> Listar();
         Task<K> Alterar(T obj);
-        Task<K> Excluir(T obj);
+        Task<K> Excluir(int obj);
         Task<K> BuscarId(int obj);
         //K Incluir(T obj);
         //List<K> Listar();

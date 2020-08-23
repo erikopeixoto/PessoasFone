@@ -2,13 +2,13 @@ import { Pessoas  } from '../modelos/pessoas';
 import { FoneTipo } from '../modelos/fone-tipo';
 
 export interface PessoasFonesDto{
-  Id: number;
-  FoneTipoId: string;
-  Descricao: string;
-  PessoasId: number;
-  Nome: string;
-  FoneNumero: number;
-  FoneFormatado: string;
-  Pessoas: Pessoas;
-  FoneTipo: FoneTipo;
+  id: number;
+  foneTipoId: string;
+  descricao: string;
+  pessoasId: number;
+  nome: string;
+  foneNumero: number;
+  foneFormatado: string;
+  pessoas: Pessoas;
+  foneTipo: FoneTipo;
 }

@@ -17,17 +17,24 @@ namespace PessoasFone.Modelos.Dtos
         public string Descricao { get; set; }
         public Pessoas Pessoas { get; set; }
         public FoneTipo FoneTipo { get; set; }
-        //public string FormatarFone()
-        //{
-        //    string retorno = "";
-        //    if (this.FoneNumero > 0)
-        //    {
-        //        retorno = this.FoneNumero.ToString().PadLeft(9, '0');
-        //        retorno = string.Format("{0}.{1}", retorno.Substring(0, 5), retorno.Substring(5, 4));
+        public string FormatarFone()
+        {
+            string retorno = "";
+            if (this.FoneNumero > 0)
+            {
+                retorno = this.FoneNumero.ToString();
+                if (this.FoneNumero.ToString().Length == 8)
+                {
+                    retorno = string.Format("{0}-{1}", retorno.Substring(0, 4), retorno.Substring(4, 4));
 
-        //        FoneFormatado = retorno;
-        //    }
-        //    return retorno;
-        //}
+                }
+                else if (this.FoneNumero.ToString().Length == 9)
+                {
+                    retorno = string.Format("{0}-{1}", retorno.Substring(0, 5), retorno.Substring(5, 4));
+                }
+                FoneFormatado = retorno;
+            }
+            return retorno;
+        }
     }
 }

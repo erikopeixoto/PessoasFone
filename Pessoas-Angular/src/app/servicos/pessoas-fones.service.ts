@@ -24,7 +24,12 @@ export class PessoasFonesService extends BaseService{
     return this.servicoHttpGenerico.post(pessoa, `${BaseService.getBaseAPI()}PessoasFones/incluir`);
   }
 
-  public excluir(pessoa: PessoasFones): Promise<Array<PessoasFonesDto>> {
-    return this.servicoHttpGenerico.post(pessoa, `${BaseService.getBaseAPI()}PessoasFones/excluir`);
+  public excluir(id: number): Promise<Array<PessoasFonesDto>> {
+    return this.servicoHttpGenerico.delete(`${BaseService.getBaseAPI()}PessoasFones/excluir/${id}`);
   }
+
+  public alterar(pessoa: PessoasFones): Promise<Array<PessoasFonesDto>> {
+    return this.servicoHttpGenerico.put(pessoa, `${BaseService.getBaseAPI()}PessoasFones/alterar`);
+  }
+
 }

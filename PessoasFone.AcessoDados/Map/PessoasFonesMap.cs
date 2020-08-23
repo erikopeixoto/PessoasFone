@@ -8,9 +8,7 @@ namespace PessoasFone.AcessoDados.Map
     {
         public void Configure(EntityTypeBuilder<PessoasFones> builder)
         {
-            builder.Ignore(b => b.Id);
-
-            builder.ToTable("pessoas_fones").HasKey(t => new { t.Id, t.PessoasId, t.FoneTipoId });
+            builder.ToTable("pessoas_fones").HasKey(t => new { t.Id });
 
             builder.Property(t => t.Id).HasColumnName("id").IsRequired(true);
             builder.Property(t => t.FoneTipoId).HasColumnName("id_fone_tipo").IsRequired(true);
@@ -20,7 +18,7 @@ namespace PessoasFone.AcessoDados.Map
             builder.HasOne(c => c.FoneTipo)
                    .WithMany(c => c.PessoasFones)
                    .HasForeignKey(c => c.FoneTipoId);
-
+            
             builder.HasOne(c => c.Pessoas)
                    .WithMany(c => c.PessoasFones)
                    .HasForeignKey(c => c.PessoasId);

@@ -154,8 +154,8 @@ export class GenericHttpService<T> {
   public handleError = (error: HttpErrorResponse) => {
     if (error) {
       const message = error.error;
-      if (message['title'] && message['message'] && message['type']) {
-        this.messagingService.message.emit(new ModalMessage(message['title'], message['message'], message['typeInt'], message['Type']));
+      if (message && message['title'] && message['message'] && message['type']) {
+        this.messagingService.message.emit(new ModalMessage(message['title'], message['message'], message['typeInt'], message['type']));
       } else {
         if (error.statusText === 'Token expirado') {
           this.messagingService.message.emit(new ModalMessage('Alerta', 'Tempo de sessão expirado.', 1, 'warning'));
@@ -216,8 +216,8 @@ export class GenericHttpService<T> {
 
   public handleErrorRelatorio = (error: HttpErrorResponse) => {
     const message = error.error;
-    if (message && message['Title'] && message['Message'] && message['Type']) {
-      this.messagingService.message.emit(new ModalMessage(message['Title'], message['Message'], message['TypeInt'], message['Type']));
+    if (message && message['title'] && message['message'] && message['type']) {
+      this.messagingService.message.emit(new ModalMessage(message['title'], message['message'], message['TypeInt'], message['Type']));
     }
     if (error.status === 521) {
       return Observable.throwError({ status: error.status, Mensagem: error.statusText });

@@ -3,7 +3,7 @@
     <div class="form-inline mr-auto" style="width: 60%;">
       <div class="form-group mb-6">
         <app-input-text titulo="Nome *"
-                        controlName="Nome"
+                        controlName="nome"
                         [formGroup]="formPessoasFones"
                         maxLength="30"
                         style="width: 500px">
@@ -12,7 +12,7 @@
     </div>
     <div>
       <app-input-text titulo="Telefone *"
-                      controlName="FoneFormatado"
+                      controlName="foneFormatado"
                       maxLength="9"
                       maskTexto="\d{5}-\d{4}"
                       [formGroup]="formPessoasFones"
@@ -22,7 +22,7 @@
     <div>
       <app-input-select titulo="Tipo *"
                       [opcoes]="tipos"
-                      controlName="FoneTipoId"
+                      controlName="foneTipoId"
                       [formGroup]="formPessoasFones"
                       style="width: 300px">
       </app-input-select>

@@ -69,7 +69,8 @@ namespace PessoasFone.WebApi.Controllers
             try
             {
                 await servico.Alterar(pessoasfone);
-                return Ok("Alteração realizada com sucesso");
+                MessageResultData resultado = MessageResult.Message(Constantes.Constantes.SUCESSO, "Alteração realizada com sucesso.", MessageTypeEnum.success);
+                return Ok(resultado);
             }
             catch (Exception ex)
             {
@@ -83,7 +84,8 @@ namespace PessoasFone.WebApi.Controllers
             try
             {
                 PessoasFonesDto aplic = await servico.Incluir(pessoasfones);
-                return Ok(aplic);
+                MessageResultData resultado = MessageResult.Message(Constantes.Constantes.SUCESSO, "Inclusão realizada com sucesso.", MessageTypeEnum.success);
+                return Ok(resultado);
             }
             catch (Exception ex)
             {
@@ -92,13 +94,14 @@ namespace PessoasFone.WebApi.Controllers
             }
         }
         // DELETE: api/produtos/5
-        [HttpDelete("{pessoasfone}")]
-        public async Task<IActionResult> Exlcuir(PessoasFones pessoasfones)
+        [HttpDelete("excluir/{id}")]
+        public async Task<IActionResult> Excluir(int id)
         {
             try
             {
-                await servico.Excluir(pessoasfones);
-                return Ok("Exclusão realizada com sucesso");
+                await servico.Excluir(id);
+                MessageResultData resultado = MessageResult.Message(Constantes.Constantes.SUCESSO, "Exclusão realizada com sucesso.", MessageTypeEnum.success);
+                return Ok(resultado);
             }
             catch (Exception ex)
             {

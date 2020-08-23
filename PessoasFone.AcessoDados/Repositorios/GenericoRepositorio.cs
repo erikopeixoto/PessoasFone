@@ -39,9 +39,9 @@ namespace PessoasFone.AcessoDados.Repositorios
         }
         public virtual async Task<T> Alterar(long id, T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
             try
             {
+                _context.Update(entity);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -64,35 +64,38 @@ namespace PessoasFone.AcessoDados.Repositorios
             }
 
         }
-        public virtual async Task<T> Excluir(long id)
+        public virtual async Task<T> Excluir(int id)
         {
-            var entity = _context.Set<T>().Find(id);
+            try
+            {
+                var entity = _context.Set<T>().Find(id);
 
-            _context.Set<T>().Remove(entity);
-            await _context.SaveChangesAsync();
+                _context.Set<T>().Remove(entity);
+                await _context.SaveChangesAsync();
 
-            return entity;
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(TrataErro(ex));
+            }
         }
         private string TrataErro(Exception ex)
         {
-            string msg = "";
-            var sqlError = ex.InnerException.InnerException;
+            string sqlError = ex.InnerException.ToString();
 
             if (sqlError == null)
             {
-                msg = ex.InnerException.Message;
+                sqlError = ex.Message.ToString();
             }
-            else
-            {
-                msg = sqlError.Message;
-            }
-            int LcolFim = msg.IndexOf((char)13);
+
+            int LcolFim = sqlError.IndexOf((char)13);
 
             if (LcolFim != -1)
             {
-                msg = msg.Substring(0, LcolFim);
+                sqlError = sqlError.Substring(0, LcolFim);
             }
-            return msg;
+            return sqlError;
         }
     }
 }

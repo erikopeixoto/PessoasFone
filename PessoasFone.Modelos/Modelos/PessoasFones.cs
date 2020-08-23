@@ -9,7 +9,7 @@ namespace PessoasFone.Modelos.Modelos
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int FoneNumero { get; set; }
-        public int PessoasId { get; set; }
+        public int? PessoasId { get; set; }
         public int FoneTipoId { get; set; }
         public Pessoas Pessoas { get; set; }
         public FoneTipo FoneTipo { get; set; }

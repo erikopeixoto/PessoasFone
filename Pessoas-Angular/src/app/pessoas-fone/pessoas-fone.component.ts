@@ -49,8 +49,9 @@ export class PessoasFoneComponent implements OnInit {
   }
 
   pesquisarPessoasFones(): void {
+    this.pessoasFonesFiltrados = [];
     this.pessoasFonesService.listar().then((lista) => {
-    if (!Util.isNullOrEmpty(lista[0].FoneNumero)) {
+    if (!Util.isNullOrEmpty(lista[0].foneNumero)) {
        this.pessoasFonesFiltrados = lista;
      }
     });
@@ -64,8 +65,10 @@ export class PessoasFoneComponent implements OnInit {
     template.show();
   }
 
-  editarPessoasFone(item: PessoasFonesService): void {
-
+  editarPessoasFone(item: PessoasFonesDto): void {
+    this.pessoasFonesService.pessoasFoneDto = item;
+    this.modalDetalhePessoasFone.title = 'Alteração';
+    this.modalDetalhePessoasFone.showModal();
   }
 
   excluirPessoasFone(item: PessoasFonesDto): void {
@@ -82,8 +85,8 @@ export class PessoasFoneComponent implements OnInit {
     dialogRef.afterClosed().subscribe((opcao: boolean) => {
       if (opcao) {
          if (! Util.isNullOrEmpty(item)) {
-            this.pessoasFones.id = item.Id;
-            this.pessoasFonesService.excluir(this.pessoasFones).then(() => {
+            this.pessoasFonesService.excluir(item.id).then(() => {
+              this.pesquisarPessoasFones();
             });
          }
       }

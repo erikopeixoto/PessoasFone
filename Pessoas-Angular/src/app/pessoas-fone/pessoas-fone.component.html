@@ -30,12 +30,12 @@
         <th colspan="2">Ações</th>
       </tr>
     </thead>
-    <tbody *ngIf="pessoasFonesFiltrados && pessoasFonesFiltrados.length">
+    <tbody *ngIf="pessoasFonesFiltrados && pessoasFonesFiltrados.length > 0">
       <tr *ngFor="let PessoasFone of pessoasFonesFiltrados">
-        <td>{{PessoasFone.Id}}</td>
-        <td>{{PessoasFone.Nome}}</td>
-        <td>{{PessoasFone.FoneFormatado}}</td>
-        <td>{{PessoasFone.Descricao}}</td>
+        <td>{{PessoasFone.id}}</td>
+        <td>{{PessoasFone.nome}}</td>
+        <td>{{PessoasFone.foneFormatado}}</td>
+        <td>{{PessoasFone.descricao}}</td>
         <td>
           <div class="btn-group">
             <button class="btn btn-sm btn-success" title="Editar" (click)="editarPessoasFone(PessoasFone)">

@@ -24,6 +24,7 @@ export class PessoasFoneDetalheComponent implements OnInit {
   @Output() itemDestino = new EventEmitter();
 
   public pessoasFones: PessoasFones;
+  public pessoasFonesDto: PessoasFonesDto;
   public formPessoasFones: FormGroup;
   public operacao: string;
   public tipos: Array<FoneTipo>;
@@ -39,23 +40,35 @@ export class PessoasFoneDetalheComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.pessoasFonesService.pessoasFoneDto) {
-      this.operacao = 'Confirma a alteração?';
-    } else {
-      this.operacao = 'Confirma a inclusão?';
-    }
-
-    this.formPessoasFones = this.fb.group({
-      FoneTipoId: [null, Validators.required],
-      Nome: ['', Validators.required],
-      FoneFormatado: ['', [Validators.required, Validators.minLength(8)]],
-      FoneNumero: []
-    });
     this.foneTipoService.listar().then((lista) => {
       if (lista.length > 0) {
          this.tipos = lista;
       }
     });
+
+    this.formPessoasFones = this.fb.group({
+      foneTipoId: [null, Validators.required],
+      nome: ['', Validators.required],
+      foneFormatado: ['', [Validators.required, Validators.minLength(8)]],
+      foneNumero: [],
+      pessoasId: []
+    });
+
+    if (this.pessoasFonesService.pessoasFoneDto) {
+      this.operacao = 'Confirma a alteração?';
+      this.pessoasFonesDto = this.pessoasFonesService.pessoasFoneDto;
+      this.carregarDados();
+
+    } else {
+      this.operacao = 'Confirma a inclusão?';
+    }
+  }
+
+  carregarDados(): void {
+
+    this.formPessoasFones.controls['foneTipoId'].setValue(this.pessoasFonesDto.foneTipoId);
+    this.formPessoasFones.controls['nome'].setValue(this.pessoasFonesDto.nome);
+    this.formPessoasFones.controls['foneFormatado'].setValue(this.pessoasFonesDto.foneNumero);
   }
 
   enviar(): void {
@@ -72,27 +85,46 @@ export class PessoasFoneDetalheComponent implements OnInit {
       const dialogRef = this.dialog.open(AlertaComponent, config);
       dialogRef.afterClosed().subscribe((opcao: boolean) => {
         if (opcao) {
-           if (Util.isNullOrEmpty(this.pessoasFonesService.pessoasFoneDto)) {
+           if (Util.isNullOrEmpty(this.pessoasFonesDto)) {
               this.incluirTelefone();
-           }
+           } else {
+            this.alterarTelefone();
+          }
         }
       });
     }
   }
 
   incluirTelefone(): void {
-    const pessoasFonesDto = this.formPessoasFones.getRawValue() as PessoasFonesDto;
+    const pessoasDto = this.formPessoasFones.getRawValue() as PessoasFonesDto;
     this.pessoasFones = this.formPessoasFones.getRawValue() as PessoasFones;
-    this.pessoasFones.foneNumero = Number(pessoasFonesDto.FoneFormatado);
+    this.pessoasFones.foneNumero = Number(pessoasDto.foneFormatado);
     this.pessoasFones.pessoas = new Pessoas();
-    this.pessoasFones.pessoas.nome = pessoasFonesDto.Nome;
+    this.pessoasFones.pessoas.nome = pessoasDto.nome;
     this.pessoasFonesService.incluir(this.pessoasFones).then(() => {
+      this.modalParent.pesquisarPessoasFones();
+      this.modalParent.modalDetalhePessoasFone.closeModal();
+    });
+  }
+
+  alterarTelefone(): void {
+    const pessoasDto = this.formPessoasFones.getRawValue() as PessoasFonesDto;
+    this.pessoasFones = this.formPessoasFones.getRawValue() as PessoasFones;
+    this.pessoasFones.foneNumero = Number(pessoasDto.foneFormatado);
+    this.pessoasFones.pessoas = new Pessoas();
+    this.pessoasFones.pessoas.nome = pessoasDto.nome;
+    this.pessoasFones.foneTipoId = pessoasDto.foneTipoId;
+    this.pessoasFones.pessoas.id = this.pessoasFonesDto.pessoasId;
+    this.pessoasFones.pessoasId = this.pessoasFonesDto.pessoasId;
+    this.pessoasFones.id = this.pessoasFonesDto.id;
+    this.pessoasFonesService.alterar(this.pessoasFones).then(() => {
+      this.modalParent.pesquisarPessoasFones();
       this.modalParent.modalDetalhePessoasFone.closeModal();
     });
   }
 
   fechar(): void {
     this.modalParent.modalDetalhePessoasFone.closeModal();
-    // this.router.navigateByUrl('pessoasFone');
+    this.modalParent.pesquisarPessoasFones();
   }
 }

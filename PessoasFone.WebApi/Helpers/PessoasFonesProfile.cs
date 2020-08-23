@@ -2,7 +2,7 @@
 using PessoasFone.Modelos.Modelos;
 using AutoMapper;
 
-namespace PessoasFone.Modelos.Helpers
+namespace PessoasFone.WebApi.Helpers
 {
     public class PessoasFonesProfile : Profile
     {
@@ -16,8 +16,10 @@ namespace PessoasFone.Modelos.Helpers
                 .ForMember(dest => dest.Pessoas, opt => opt.MapFrom(scr => scr.Pessoas))
                 .ForMember(dest => dest.PessoasId, opt => opt.MapFrom(scr => scr.PessoasId))
                 .ForMember(dest => dest.FoneNumero, opt => opt.MapFrom(scr => scr.FoneNumero))
+                .ForMember(dest => dest.FoneTipoId, opt => opt.MapFrom(scr => scr.FoneTipo.Id))
+                .ReverseMap()
                 .ForAllOtherMembers(dest => dest.Ignore());
-        }
+       }
     }
 }
  
