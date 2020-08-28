@@ -17,7 +17,5 @@
 ## FrontEnd
  - Utilizado o Material Designer
  - Inclusão / Alteração / Exclusão / Lista (grid) implementados
- - Açoes futuras a executar
-   - Criticar melhor a entrada do campo do telefone para permitir apenas números e criar uma mascara de formatação na inclusão e edição.
 ## Considerações Gerais
  - Estrutura de FrontEnd e BackEnd feita e acesso aos métodos da API funcionando corretamente.
