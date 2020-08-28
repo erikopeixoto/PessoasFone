@@ -61,12 +61,9 @@ export class PessoasFoneComponent implements OnInit {
 
   }
 
-  openModal(template: any): void {
-    template.show();
-  }
-
   editarPessoasFone(item: PessoasFonesDto): void {
     this.pessoasFonesService.pessoasFoneDto = item;
+    this.pessoasFonesService.cargaDados = false;
     this.modalDetalhePessoasFone.title = 'Alteração';
     this.modalDetalhePessoasFone.showModal();
   }
@@ -95,6 +92,7 @@ export class PessoasFoneComponent implements OnInit {
 
   incluirPessoasFone(): void {
     this.pessoasFonesService.pessoasFoneDto = null;
+    this.pessoasFonesService.cargaDados = false;
     this.modalDetalhePessoasFone.title = 'Inclusão';
     this.modalDetalhePessoasFone.showModal();
   }

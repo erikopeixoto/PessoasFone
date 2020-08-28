@@ -3,7 +3,7 @@ import { FoneTipo } from '../modelos/fone-tipo';
 
 export interface PessoasFonesDto{
   id: number;
-  foneTipoId: string;
+  foneTipoId: number;
   descricao: string;
   pessoasId: number;
   nome: string;

@@ -1,35 +1,31 @@
 import { Injectable } from '@angular/core';
-import { HttpParams, HttpRequest, HttpErrorResponse, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError, retry } from 'rxjs/operators';
+import { HttpParams, HttpErrorResponse, HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
-import { Util } from '../utils/util';
 import { Router } from '@angular/router';
 import { MessagingService } from './messaging.service';
 import { ModalMessage } from '../shared/modelos/modal-message';
-import { ProgressSpinnerComponent } from '../shared/progress-spinner/progress-spinner.component';
+import { ProgressSpinnerService } from 'src/app/shared/progress-spinner/progress-spinner.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GenericHttpService<T> {
+export class GenericHttpService<T, K> {
   private url: string;
-
-  public progress = new ProgressSpinnerComponent();
   public contador = 0;
 
   constructor(
     private readonly httpClient: HttpClient,
     private readonly rotaService: Router,
-    private readonly messagingService: MessagingService
+    private readonly messagingService: MessagingService,
+    private readonly progressSpinnerService: ProgressSpinnerService
   ) { }
 
   carregando(): void {
     if (this.contador === 0 ){
-       this.progress.getVisible();
+       this.progressSpinnerService.show();
     }
     this.contador++;
   }
@@ -37,21 +33,21 @@ export class GenericHttpService<T> {
   carregado(): void {
     this.contador--;
     if (this.contador === 0 ){
-       this.progress.getVisible();
+       this.progressSpinnerService.hide();
     }
   }
 
-  get(httpParams?: HttpParams, url?: string): Promise<Array<any>> {
+  get(httpParams?: HttpParams, url?: string): Promise<Array<K>> {
     this.url = url;
     const header = this.getHeaders();
     this.carregando();
 
-    return this.httpClient.get<Array<any>>(this.url, {
+    return this.httpClient.get<Array<K>>(this.url, {
       headers: header,
       params: httpParams,
       responseType: 'json'
     })
-    .pipe(map((response) => this.handleResponse(response)),
+    .pipe(map((response) => this.handleResponseK(response)),
           catchError((err) => this.handleError(err)))
     .toPromise();
   }
@@ -134,6 +130,12 @@ export class GenericHttpService<T> {
     return response;
   }
 
+  public handleResponseK = (response: K[]) => {
+    this.handleMessage(response);
+    this.carregado();
+    return response;
+  }
+
   public handleResponseT = (responseT: T) => {
     this.handleMessage(responseT);
     this.carregado();
@@ -210,8 +212,10 @@ export class GenericHttpService<T> {
         observe: 'response',
         responseType: 'blob'
       })
-      .map(response => this.handleResponseTBlob(response))
-      .catch(err => this.handleErrorRelatorio(err));
+      .pipe(
+        map(response => this.handleResponseTBlob(response)),
+        catchError(err => this.handleErrorRelatorio(err))
+      );
   }
 
   public handleErrorRelatorio = (error: HttpErrorResponse) => {

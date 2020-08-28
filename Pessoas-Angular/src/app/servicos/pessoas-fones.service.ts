@@ -9,14 +9,15 @@ import { PessoasFonesDto } from '../dtos/pessoas-fones-dto';
 })
 export class PessoasFonesService extends BaseService{
   public pessoasFoneDto: PessoasFonesDto = null;
+  public cargaDados: boolean;
 
   constructor(
-    private readonly servicoHttpGenerico: GenericHttpService<PessoasFones>
+    private readonly servicoHttpGenerico: GenericHttpService<PessoasFones, PessoasFonesDto>
   ) {
     super();
   }
 
-  public listar(): Promise<Array<PessoasFonesDto>> {
+  public listar(): Promise<Array<any>> {
     return this.servicoHttpGenerico.get(null, `${BaseService.getBaseAPI()}PessoasFones/listar`);
   }
 

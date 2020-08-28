@@ -1,6 +1,5 @@
 import { ElementRef, Renderer2 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { isNullOrUndefined } from 'util';
 import { HtmlElement } from '../shared/modelos/html-element';
 import { TypeExportReport } from '../shared/constantes/type-export-report.enum';
 import { ValidationResult } from './validation-result.d';
@@ -97,7 +96,7 @@ export class Util {
 
   public static onValueChanged(formErrors: any, formulario: FormGroup, validationMessages: any): void {
     for (const campo in formErrors) {
-      if (!isNullOrUndefined(campo)) {
+      if (!this.isNullOrEmpty(campo)) {
         this.controlFormularioChangedErrors(formErrors, formulario, validationMessages, campo);
       }
     }
@@ -673,7 +672,7 @@ export class Util {
 
   public static verificaSituacaoCompativel(entrada: any, comparativo: any[]): boolean {
     entrada = entrada.toString();
-    if (!isNullOrUndefined(comparativo)) {
+    if (!this.isNullOrEmpty(comparativo)) {
       comparativo.forEach(data => (data = data.toString()));
     }
     return comparativo.indexOf(entrada) > -1;
@@ -681,7 +680,7 @@ export class Util {
 
   public static DeletaParametrosDiferentes(parametro: string, valor: any, lista: any): any {
     const contribuinte = [];
-    if (!isNullOrUndefined(valor) && !isNullOrUndefined(lista) && !isNullOrUndefined(parametro)) {
+    if (!this.isNullOrEmpty(valor) && !this.isNullOrEmpty(lista) && !this.isNullOrEmpty(parametro)) {
       for (const iteme of valor) {
         for (const itemi of lista) {
           if (itemi[parametro] === iteme) {
@@ -696,7 +695,7 @@ export class Util {
   }
 
   public static DeletaParametrosIguais(parametro: string, valor: any, lista: any): any {
-    if (!isNullOrUndefined(valor) && !isNullOrUndefined(lista) && !isNullOrUndefined(parametro)) {
+    if (!this.isNullOrEmpty(valor) && !this.isNullOrEmpty(lista) && !this.isNullOrEmpty(parametro)) {
       for (let e = 0; e < valor.length; e++) {
         for (let i = 0; i < lista.length; i++) {
           if (lista[i][parametro] === valor[e]) {

@@ -1,5 +1,7 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component,
+         OnInit, Input, Output, EventEmitter ,   ChangeDetectionStrategy, ViewChild, resolveForwardRef,
+} from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { PessoasFonesService } from 'src/app/servicos/pessoas-fones.service';
@@ -12,22 +14,30 @@ import { PessoasFones } from 'src/app/modelos/pessoas-fones';
 import { PessoasFonesDto } from 'src/app/dtos/pessoas-fones-dto';
 import { Pessoas } from 'src/app/modelos/pessoas';
 import { Util } from 'src/app/utils/util';
+import { MaskManager } from '../../utils/mask-manager';
+import { InputTextComponent } from 'src/app/shared/components/campos/input-text/input-text.component';
 
 @Component({
   selector: 'app-pessoas-fone-detalhe',
   templateUrl: './pessoas-fone-detalhe.component.html',
-  styleUrls: ['./pessoas-fone-detalhe.component.css']
+  styleUrls: ['./pessoas-fone-detalhe.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PessoasFoneDetalheComponent implements OnInit {
   @Input() modalParent: any;
   @Input() item: any;
   @Output() itemDestino = new EventEmitter();
 
+  @ViewChild('InputTexto', {static: true}) inputTexto: InputTextComponent;
+
   public pessoasFones: PessoasFones;
   public pessoasFonesDto: PessoasFonesDto;
   public formPessoasFones: FormGroup;
   public operacao: string;
   public tipos: Array<FoneTipo>;
+  public maskManager: MaskManager;
+  public pai: PessoasFoneDetalheComponent;
+  public cargaDados: boolean;
 
   constructor(
     public pessoasFonesService: PessoasFonesService,
@@ -36,15 +46,16 @@ export class PessoasFoneDetalheComponent implements OnInit {
     public fb: FormBuilder,
     public dialog: MatDialog,
   ) {
-
+      this.pai = this;
   }
 
   ngOnInit(): void {
     this.foneTipoService.listar().then((lista) => {
-      if (lista.length > 0) {
+      if (! Util.isNullOrEmpty(lista) && lista.length > 0) {
          this.tipos = lista;
       }
     });
+    this.cargaDados = true;
 
     this.formPessoasFones = this.fb.group({
       foneTipoId: [null, Validators.required],
@@ -57,18 +68,25 @@ export class PessoasFoneDetalheComponent implements OnInit {
     if (this.pessoasFonesService.pessoasFoneDto) {
       this.operacao = 'Confirma a alteração?';
       this.pessoasFonesDto = this.pessoasFonesService.pessoasFoneDto;
-      this.carregarDados();
-
+      this.telefoneExistente();
+      this.cargaDados = false;
     } else {
       this.operacao = 'Confirma a inclusão?';
     }
   }
 
-  carregarDados(): void {
+  async telefoneExistente(): Promise<boolean> {
+    await this.carregarDados();
+    return true;
+  }
 
+  carregarDados(): Promise<boolean> {
+    return new Promise((resolve) => {
     this.formPessoasFones.controls['foneTipoId'].setValue(this.pessoasFonesDto.foneTipoId);
     this.formPessoasFones.controls['nome'].setValue(this.pessoasFonesDto.nome);
     this.formPessoasFones.controls['foneFormatado'].setValue(this.pessoasFonesDto.foneNumero);
+    resolve(true);
+   });
   }
 
   enviar(): void {
@@ -125,6 +143,35 @@ export class PessoasFoneDetalheComponent implements OnInit {
 
   fechar(): void {
     this.modalParent.modalDetalhePessoasFone.closeModal();
-    this.modalParent.pesquisarPessoasFones();
+  }
+
+  alterarMascaraTelefone(): void {
+    let retorno = '0000-0000';
+    const foneTipo = this.formPessoasFones.controls['foneTipoId'].value;
+    const foneTipoIdDto = this.pessoasFonesDto ? this.pessoasFonesDto.foneTipoId : 0;
+    if (foneTipo === 1 && this.inputTexto.maskTexto === '0000-0000') {
+      retorno = '0 0000-0000';
+      if (foneTipo !== foneTipoIdDto){
+        this.formPessoasFones.controls['foneFormatado'].setValue('');
+      }
+      this.formPessoasFones.controls['foneFormatado'].setValidators(Validators.compose([
+      Validators.required, Validators.minLength(9)]));
+      this.inputTexto.maskTexto = retorno;
+      this.inputTexto.update();
+    } else if (foneTipo !== 1) {
+      this.formPessoasFones.controls['foneFormatado'].setValidators(Validators.compose([
+        Validators.required, Validators.minLength(8)]));
+      this.inputTexto.maskTexto = retorno;
+      this.inputTexto.update();
+    }
+    this.cargaDados = true;
+  }
+
+  ativarTelefone(): boolean {
+    let retorno = true;
+    if (! Util.isNullOrEmpty(this.formPessoasFones.controls['foneTipoId'].value)) {
+      retorno = false;
+    }
+    return retorno;
   }
 }

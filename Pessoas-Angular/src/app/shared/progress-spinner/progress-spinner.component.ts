@@ -1,25 +1,20 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { ProgressSpinnerService} from './progress-spinner.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-progress-spinner',
   templateUrl: './progress-spinner.component.html',
   styleUrls: ['./progress-spinner.component.css']
 })
-@Injectable()
+
 export class ProgressSpinnerComponent implements OnInit {
 
-  public visible: boolean;
+  public isLoading: Subject<boolean> = this.progressSpinerService.isLoading;
 
-  constructor() {
-    this.visible = false;
-  }
-
-  public getVisible(): void {
-    if (this.visible){
-       this.visible = false;
-    } else {
-     this.visible = true;
-   }
+  constructor(
+    private readonly progressSpinerService: ProgressSpinnerService
+  ) {
   }
 
   ngOnInit(): void {

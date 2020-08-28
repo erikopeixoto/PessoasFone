@@ -9,7 +9,7 @@ import { FoneTipo } from '../modelos/fone-tipo';
 export class FoneTipoService extends BaseService{
 
   constructor(
-    private readonly servicoHttpGenerico: GenericHttpService<FoneTipo>
+    private readonly servicoHttpGenerico: GenericHttpService<FoneTipo, FoneTipo>
   ) {
     super();
   }

@@ -11,21 +11,23 @@
       </div>
     </div>
     <div>
-      <app-input-text titulo="Telefone *"
-                      controlName="foneFormatado"
-                      maxLength="9"
-                      maskTexto="\d{5}-\d{4}"
-                      [formGroup]="formPessoasFones"
-                      style="width: 250px">
-      </app-input-text>
-    </div>
-    <div>
       <app-input-select titulo="Tipo *"
                       [opcoes]="tipos"
                       controlName="foneTipoId"
                       [formGroup]="formPessoasFones"
+                      [ngChange]= "alterarMascaraTelefone()"
+                      [pai]="this.pai"
                       style="width: 300px">
       </app-input-select>
+    </div>
+    <div>
+      <app-input-text titulo="Telefone *"
+                      controlName="foneFormatado"
+                      maskTexto="0000-0000"
+                      [formGroup]="formPessoasFones"
+                      [isDisabled]="ativarTelefone()"
+                      style="width: 250px" #InputTexto>
+      </app-input-text>
     </div>
   </div>
   <mat-card-actions>

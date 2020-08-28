@@ -1,4 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component,
+         Input,
+         ChangeDetectionStrategy,
+         ChangeDetectorRef } from '@angular/core';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { ValidarCamposService } from '../validar-campos.service';
 import { FoneTipo } from 'src/app/modelos/fone-tipo';
@@ -15,10 +18,21 @@ export class InputSelectComponent {
   @Input() controlName: string;
   @Input() opcoes: Array<FoneTipo>;
   @Input() style: string;
+  @Input() isDisabled: boolean;
+  @Input() ngChange;
+  @Input() pai;
 
-  constructor(public validacao: ValidarCamposService) { }
+  constructor(public validacao: ValidarCamposService,
+              private readonly changeDetectorRef: ChangeDetectorRef) {
+    this.isDisabled = false;
+    this.ngChange = '';
+   }
 
   get formControl(): AbstractControl {
     return this.formGroup.controls[this.controlName];
+  }
+
+  update(): void {
+    this.changeDetectorRef.markForCheck();
   }
 }

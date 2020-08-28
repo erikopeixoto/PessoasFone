@@ -3,7 +3,7 @@ import { FoneTipo } from '../modelos/fone-tipo';
 
 export class PessoasFones{
   id: number;
-  foneTipoId: string;
+  foneTipoId: number;
   pessoasId: number;
   foneNumero: number;
   pessoas: Pessoas;

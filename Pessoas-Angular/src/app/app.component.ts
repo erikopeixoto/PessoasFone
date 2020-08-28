@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Title } from '@angular/platform-browser';
+
 import { AlertaComponent } from './shared/components/alerta/alerta.component';
 import { Alerta } from './shared/modelos/alerta';
 import { ModalMessage } from './modelos/modal-message';
 import { MessagingService } from './servicos/messaging.service';
-import { MatDialog } from '@angular/material/dialog';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Aliquota-Angular';
+  title = 'Pessoas-Angular';
   private readonly messages = new Array<ModalMessage>();
   private showingMessage: boolean;
 

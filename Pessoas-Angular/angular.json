@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Aliquota-Angular": {
+    "pessoas-angular": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -26,10 +26,13 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"
+            ],
             "allowedCommonJsDependencies": [
-              "rxjs-compat",
-              "rxjs"
+              "rxjs",
+              "Utils"
            ]
           },
           "configurations": {
@@ -66,18 +69,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Aliquota-Angular:build"
+            "browserTarget": "pessoas-angular:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Aliquota-Angular:build:production"
+              "browserTarget": "pessoas-angular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Aliquota-Angular:build"
+            "browserTarget": "pessoas-angular:build"
           }
         },
         "test": {
@@ -114,15 +117,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "Aliquota-Angular:serve"
+            "devServerTarget": "pessoas-angular:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "Aliquota-Angular:serve:production"
+              "devServerTarget": "pessoas-angular:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "Aliquota-Angular"
+  "defaultProject": "pessoas-angular"
 }

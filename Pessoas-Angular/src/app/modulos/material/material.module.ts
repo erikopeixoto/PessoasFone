@@ -27,7 +27,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { NgxMaskModule, IConfig} from 'ngx-mask';
 
+const maskConfig: () => Partial<IConfig> = () => {
+  return {
+    validation: false,
+  };
+};
 
 @NgModule({
     imports: [
@@ -60,7 +66,8 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatSortModule,
         MatFormFieldModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        NgxMaskModule.forRoot(maskConfig)
     ],
     exports: [
         MatIconModule,
@@ -92,7 +99,8 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatSortModule,
         MatFormFieldModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        NgxMaskModule
     ]
 })
 export class MaterialModule {

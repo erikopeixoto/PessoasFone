@@ -15,6 +15,9 @@ export class MaskManager {
     public static CPFBase = { mask: [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/] };
     public static CNPJ = { mask: [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/] };
 
+    public static MaskTelefone = '0000-0000';
+    public static MaskCelular = '00000-0000';
+
     public static getNumberRegex(len): any {
         const n = [];
         for (let i = 0; i < len; i++) {

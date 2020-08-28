@@ -1,9 +1,8 @@
-
-<mat-card>
-  <mat-card-content>
-    <mat-progress-spinner *ngIf="visible"
-        class = "example-margin"
+<div *ngIf="this.isLoading | async" class="overlay">
+    <mat-progress-spinner
+        class = "spinner"
+        color="primary"
+        valor="50"
         mode = "indeterminate">
     </mat-progress-spinner>
-  </mat-card-content >
-</mat-card>
+</div>

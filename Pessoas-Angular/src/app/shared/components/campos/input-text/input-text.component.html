@@ -2,11 +2,14 @@
   <mat-form-field class="full-width" [style]="style" appearance="outline">
     <mat-label>{{titulo}}</mat-label>
     <input  matInput
+            [mask]="maskTexto"
             [class]="class"
             [placeholder]="titulo"
             [name]="controlName"
             [maxlength]="maxLength"
-            [formControlName]="controlName">
+            [formControlName]="controlName"
+            [readonly]="isDisabled"
+            id="inputTexto">
     <mat-error *ngIf="validacao.hasErrorValidar(formControl, 'required')">Campo obrigatório</mat-error>
     <mat-error *ngIf="validacao.hasErrorValidar(formControl, 'minlength')">
       Campo precisa ter no mínimo {{validacao.lengthValidar(formControl, 'minlength')}} caracteres
@@ -16,3 +19,4 @@
     </mat-error>
   </mat-form-field>
 </div>
+
